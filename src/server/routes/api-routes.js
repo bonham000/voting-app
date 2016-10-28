@@ -21,15 +21,15 @@ app.post('/api/add-poll', (req, res) => {
 	jwt.verify(token, config.secret, (err, decoded) => {
 		if (!err) {
 				MongoClient.connect(url, (err, db) => {
-					assert.equal(null, err)
+					assert.equal(null, err);
 					db.collection('polls').insertOne(req.body);
-					console.log('token validated, poll inserted');	 	
+					console.log('token validated, poll inserted');
 				 	res.end();
 					db.close();
 				});
 		}
 		else {
-			res.status(401).send('Unauthorized!')
+			res.status(401).send('You are not a valid user!!!');
 		}
 	});
 

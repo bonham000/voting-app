@@ -1,10 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
 
 import { submitNewPoll } from '../actions/add-poll'
 
+@connect(
+  state => ({
+    error: state.auth.permissionsError
+  }),
+  dispatch => ({
+    submitNewPoll: bindActionCreators(submitNewPoll, dispatch)
+  })
+)
 class AddPoll extends React.Component {
+  static propTypes = {
+    error: React.PropTypes.string.isRequired,
+    submitNewPoll: React.PropTypes.func.isRequired
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -96,8 +109,8 @@ class AddPoll extends React.Component {
       console.log('token:', token);
 
       this.props.submitNewPoll(pollData, token).then( (response) => {
-        console.log('poll submited!');
-        browserHistory.push('/');
+        // console.log('poll submited!');
+        // browserHistory.push('/');
       });
 
     }
@@ -129,6 +142,7 @@ class AddPoll extends React.Component {
     return (
       <div className = "addPollWrapper">
         <h1>Add a New Poll</h1>
+        { this.props.error && <div className = 'errorsBox'>{this.props.error}</div> }
           <p>Poll Title:</p>
             <input
               className = "titleInput"
@@ -147,8 +161,4 @@ class AddPoll extends React.Component {
   }
 };
 
-AddPoll.propTypes = {
-  submitNewPoll: React.PropTypes.func.isRequired
-}
-
-export default connect(null, { submitNewPoll } )(AddPoll);
+export default AddPoll;

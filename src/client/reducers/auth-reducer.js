@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, NEW_SIGNUP, REGISTRATION_ERROR } from '../actions/login'
 import { LOGOUT_SUCCESS } from '../actions/logout'
+import { INVALID_REQUEST } from '../actions/auth'
 
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
@@ -10,6 +11,7 @@ import { LOGOUT_SUCCESS } from '../actions/logout'
 const defaultState = {
   loginError: '',
   registrationError: '',
+  permissionsError: '',
   isFetching: false,
   isAuthenticated: localStorage.getItem('id_token') ? true : false
 }
@@ -58,6 +60,13 @@ const auth = (state = defaultState, action) => {
         isFetching: false,
         isAuthenticated: false,
         registrationError: action.error
+      });
+
+    case INVALID_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        permissionsError: action.error
       });
  
     default:

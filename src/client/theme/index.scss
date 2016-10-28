@@ -9,6 +9,10 @@ body {
 	font-size: 30px;
 }
 
+.errorsBox {
+	color: #E71A3A;
+}
+
 .navigationWrapper {
 	background: rgb(40,40,40);
 	width: 100vw;
@@ -79,9 +83,6 @@ body {
 	button:hover {
 		cursor: pointer;
 		background: rgba(220,220,220,0.2);
-	}
-	.errorsBox {
-		color: #E71A3A;
 	}
 }
 
