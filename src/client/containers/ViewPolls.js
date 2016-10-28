@@ -2,52 +2,58 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { retrievePolls } from '../actions/polls'
+import { submitVote } from '../actions/polls'
 
 @connect (
 	state => ({
 		polls: state.polls
 	}),
 	dispatch => ({ 
-		loadPolls: bindActionCreators(retrievePolls, dispatch)
+		dispatchVote: bindActionCreators(submitVote, dispatch)
 	})
 )
 class ViewPolls extends React.Component {
+	static propTypes = {
+		polls: PropTypes.array.isRequired,
+		dispatchVote: PropTypes.func.isRequired
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
-			pollData: []
+			selected: {}
 		}
 		this.selectOption = this.selectOption.bind(this);
 		this.handleVote = this.handleVote.bind(this);
 	}
 	selectOption(poll, idx) {
-		let currentPolls = this.state.polls.slice();
-		for (var a = 0; a < currentPolls.length; a++) {
-			if (currentPolls[a].title == poll.title) {
-				currentPolls[a].selected = idx;
-			}
-			console.log(currentPolls);
-		}
-		this.setState({
-			polls: currentPolls
-		});
+		const { selected } = this.state;
+		let newSelected = Object.assign({}, this.state.selected, {[poll._id]: idx})
+
+		if (selected[poll._id] === idx) { delete newSelected[poll._id] }
+		
+		this.setState({ selected: newSelected });
 	}
 	handleVote(poll) {
-		if (poll.selected !== '') {
-			
-			// dispatch vote action here
-			console.log(poll);
-
+		// find selected option
+		const { selected } = this.state;
+		const vote = {
+			id: poll._id,
+			selectedOption: selected[poll._id]
 		}
+		// dispatch vote action here
+		this.props.dispatchVote(vote);
 	}	
 	render() {
+		let selected = this.state.selected;
 		const renderPolls = this.props.polls.map( (poll, idx) => {
 			const renderOptions = poll.options.map( (option, idx) => {
+				let optionStyle = { background: 'rgba(250,250,250,0.65)' }
+				if (!isNaN(selected[poll._id]) && selected[poll._id] == idx) { optionStyle = { background: '#FFE66D' } }
 				return (
 					<div className = "optionContainer" key = {idx}>
 						<div
 							className = "option"
+							style = {optionStyle}
 							onClick = {this.selectOption.bind(this, poll, idx)}>
 							{option.option}
 						</div>
@@ -58,7 +64,7 @@ class ViewPolls extends React.Component {
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
 					{renderOptions}
-					<div className = "voteButton" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</div>
+					<button className = "voteButton" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</button>
 				</div>
 			);
 		});

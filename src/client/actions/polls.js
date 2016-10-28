@@ -21,6 +21,25 @@ export function submitNewPoll(poll, token) {
 	}
 };
 
+export const VOTE_SUBMITTED = 'VOTE_SUBMITTED'
+
+function voteSubmitted(data) {
+	return {
+		type: VOTE_SUBMITTED,
+		data
+	}
+}
+
+export function submitVote(vote) {
+	return dispatch => {
+		axios.post('/api/submit-vote', vote).then( (response) => {
+			// need to show view page here
+			browserHistory.push('/');
+			return dispatch(retrievePolls(response.data));
+		});
+	}
+}
+
 export const SAVE_POLLS = 'SAVE_POLLS'
 
 function retrievePollData(polls) {
@@ -32,7 +51,7 @@ function retrievePollData(polls) {
 
 export function retrievePolls() {
 	return dispatch => {
-		axios.get('retrieve-polls').then( (response) => {
+		axios.get('/api/retrieve-polls').then( (response) => {
 			return dispatch(retrievePollData(response.data));
 		});
 	}

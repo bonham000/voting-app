@@ -163,13 +163,37 @@ body {
 	}
 	.pollWrapper {
 		h2 {
-			margin: 5px;
+			margin: 5px auto 15px auto;
 		}
 		background: rgba(150,150,150,0.2);
 		border: 1px solid rgba(150,150,150,0.5);
 		padding: 25px;
 		margin: 10px auto;
 		width: 650px;
+		button {
+			background: white;
+			border: none;
+			font-size: 25px;
+			padding: 12px;
+			margin-top: 15px;
+		}
+		button:hover {
+			background: #37EA74;
+			cursor: pointer;
+		}
+		.optionContainer {
+			.option {
+				//background: rgba(250,250,250,0.65);
+				border: 1px solid rgba(50,50,50,0.3);
+				width: 500px;
+				margin: 5px auto;
+				padding: 7px;
+			}
+			.option:hover {
+				background: #FFE66D !important;
+				cursor: pointer;
+			}
+		}
 	}
 }
 

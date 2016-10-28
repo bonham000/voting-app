@@ -16,7 +16,6 @@ import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
 
 import authRoutes from './routes/auth-routes'
-import apiRoutes from './routes/api-routes'
 import pollRoutes from './routes/poll-routes'
 
 const app = express();
@@ -43,7 +42,6 @@ app.use(express.static('dist/client'));
 
 // connect authentication routes
 app.use(authRoutes);
-app.use(apiRoutes);
 app.use(pollRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
