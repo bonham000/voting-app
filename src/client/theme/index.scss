@@ -7,10 +7,9 @@ body {
 	color: rgb(25,25,25);
 	text-align: center;
 	font-size: 30px;
-}
-
-.errorsBox {
-	color: #E71A3A;
+	.errorsBox {
+		color: #E71A3A;
+	}
 }
 
 .navigationWrapper {
@@ -35,10 +34,10 @@ body {
 			cursor: pointer;
 		}
 		.navLoginBtn:hover {
-			background: #51FB90;
+			background: rgba(250,250,250,0.8);
 		}
 		.navSignupBtn:hover {
-			background: #51FB90;
+			background: rgba(250,250,250,0.8);
 		}
 		.navLogoutBtn:hover {
 			background: #FF7052;
@@ -87,7 +86,7 @@ body {
 }
 
 
-.addPollWrapper {
+.addPollContainer {
 	width: 450px;
 	margin: auto;
 	h1 {
@@ -115,19 +114,29 @@ body {
 	p {
 		font-size: 25px;
 	}
-	button {
-		background: white;
-		border: none;
-		font-size: 25px;
-		margin-left: 15px;
-		padding: 12px;
-		margin: 5px;
+	.btnContainer {
+		margin-top: 15px;
+		button {
+			background: white;
+			border: none;
+			font-size: 25px;
+			margin-top: 5px;
+			margin-left: 15px;
+			padding: 12px;
+			margin: 5px;
+		}
+		button:hover {
+			background: #37EA74;
+			cursor: pointer;
+		}
+		.submitBtn:hover {
+			background: #7189F7;
+		}
 	}
-	button:hover {
-		background: #FFD86C;
-		cursor: pointer;
-	}
-	.submitBtn:hover {
-		background: #7189F7;
+}
+
+.viewPollsContainer {
+	h1 {
+		font-size: 35px;
 	}
 }

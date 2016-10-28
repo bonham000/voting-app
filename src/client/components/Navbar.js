@@ -31,6 +31,9 @@ class Navbar extends Component {
                 <Link to = 'add-poll' className = 'navLink' activeClassName = 'activeRoute'>Add Poll</Link> }
 
             { isAuthenticated &&
+                <Link to = 'view-polls' className = 'navLink' activeClassName = 'activeRoute'>View Polls</Link> }                
+
+            { isAuthenticated &&
               <button className = 'navLogoutBtn' onClick={ () => dispatch(logoutUser()) }>
                 Logout
               </button> }

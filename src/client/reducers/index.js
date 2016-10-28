@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counting from './counting'
+import polls from './polls-reducer'
 import auth from './auth-reducer'
 
 export default combineReducers({
-  counting,
-  auth
+  auth,
+  polls
 });

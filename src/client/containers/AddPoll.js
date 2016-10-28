@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { browserHistory } from 'react-router'
 
-import { submitNewPoll } from '../actions/add-poll'
+import { submitNewPoll } from '../actions/polls'
 
 @connect(
   state => ({
@@ -84,7 +84,7 @@ class AddPoll extends React.Component {
       return item !== ''
     });
 
-    if (title !== '' && options) {
+    if (title !== '' && options.length > 0) {
 
       let pollOptions = [];
       // Add a votes category associated with each option
@@ -108,10 +108,7 @@ class AddPoll extends React.Component {
 
       console.log('token:', token);
 
-      this.props.submitNewPoll(pollData, token).then( (response) => {
-        // console.log('poll submited!');
-        // browserHistory.push('/');
-      });
+      this.props.submitNewPoll(pollData, token);
 
     }
   }
@@ -132,7 +129,7 @@ class AddPoll extends React.Component {
             value = {this.state.options[idx]}
             onChange = {this.changeOption} />
           <i 
-            className = "fa fa-times fa-3x removeOption"
+            className = "fa fa-times fa-2x removeOption"
             aria-hidden="true"
             onClick = {this.removeOption.bind(this, idx)}>
           </i>
@@ -140,10 +137,9 @@ class AddPoll extends React.Component {
       );
     });
     return (
-      <div className = "addPollWrapper">
+      <div className = "addPollContainer">
         <h1>Add a New Poll</h1>
         { this.props.error && <div className = 'errorsBox'>{this.props.error}</div> }
-          <p>Poll Title:</p>
             <input
               className = "titleInput"
               type = "text" 
@@ -153,9 +149,10 @@ class AddPoll extends React.Component {
               onChange = {this.handleChange} />
               <p>Poll Options:</p>
               {renderOptions}
-            <br /><br />
-          <button className = 'addBtn' onClick = {this.addOption}>Add Option</button>
-        <button className = 'submitBtn' onClick = {this.submitPoll}>Submit New Poll</button>
+          <div className = 'btnContainer'>
+            <button className = 'addBtn' onClick = {this.addOption}>Add Option</button>
+            <button className = 'submitBtn' onClick = {this.submitPoll}>Submit New Poll</button>
+          </div>
       </div>
     );
   }

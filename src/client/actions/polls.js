@@ -10,6 +10,7 @@ export function submitNewPoll(poll, token) {
 			poll,
 			token,
 		}).then( () => {
+			dispatch(retrievePolls());
 			browserHistory.push('/')
 		}).catch(err => {
 			dispatch(invalidRequest(err.response.data));
@@ -19,3 +20,20 @@ export function submitNewPoll(poll, token) {
 		});
 	}
 };
+
+export const SAVE_POLLS = 'SAVE_POLLS'
+
+function retrievePollData(data) {
+	return {
+		type: SAVE_POLLS,
+		polls: data
+	}
+}
+
+export function retrievePolls() {
+	return dispatch => {
+		axios.get('retrieve-polls').then( (response) => {
+			dispatch(retrievePollData(response.data));
+		});
+	}
+}
