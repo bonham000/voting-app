@@ -8,12 +8,16 @@ import routes from './routes'
 import thunkMiddleware from 'redux-thunk'
 import configureStore from './store/configureStore'
 
+import { retrievePolls } from './actions/polls'
+
 // import styles
 import './theme/index.scss'
 
 const store = configureStore();
 
-//console.log(store.getState());
+store.dispatch(retrievePolls());
+
+
 
 render(
   <Provider store={store}>

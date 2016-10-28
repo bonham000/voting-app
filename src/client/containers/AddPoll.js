@@ -96,6 +96,7 @@ class AddPoll extends React.Component {
       }
 
       const pollData = {
+        author: localStorage.getItem('user'),
         title: title,
         options: pollOptions,
         selected: ''
@@ -129,7 +130,7 @@ class AddPoll extends React.Component {
             value = {this.state.options[idx]}
             onChange = {this.changeOption} />
           <i 
-            className = "fa fa-times fa-2x removeOption"
+            className = "fa fa-times fa-1x removeOption"
             aria-hidden="true"
             onClick = {this.removeOption.bind(this, idx)}>
           </i>
@@ -138,7 +139,7 @@ class AddPoll extends React.Component {
     });
     return (
       <div className = "addPollContainer">
-        <h1>Add a New Poll</h1>
+        <h1>Submit a New Poll</h1>
         { this.props.error && <div className = 'errorsBox'>{this.props.error}</div> }
             <input
               className = "titleInput"

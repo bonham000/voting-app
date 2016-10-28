@@ -6,7 +6,7 @@ import { retrievePolls } from '../actions/polls'
 
 @connect (
 	state => ({
-		data: state.polls
+		polls: state.polls
 	}),
 	dispatch => ({ 
 		loadPolls: bindActionCreators(retrievePolls, dispatch)
@@ -42,7 +42,7 @@ class ViewPolls extends React.Component {
 		}
 	}	
 	render() {
-		const renderPolls = this.props.data.polls.map( (poll, idx) => {
+		const renderPolls = this.props.polls.map( (poll, idx) => {
 			const renderOptions = poll.options.map( (option, idx) => {
 				return (
 					<div className = "optionContainer" key = {idx}>
@@ -64,7 +64,7 @@ class ViewPolls extends React.Component {
 		});
 		return (
 			<div className = 'viewPollsContainer'>
-				<h1>View Polls</h1>
+				<h1>All Polls</h1>
 				{renderPolls}
 			</div>
 		);

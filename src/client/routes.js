@@ -10,6 +10,7 @@ import SignupPage from './containers/SignupPage'
 // Poll Routes
 import AddPoll from './containers/AddPoll'
 import ViewPolls from './containers/ViewPolls'
+import MyPolls from './containers/MyPolls'
 
 export default (
   <Route name = 'home' component = {App}>
@@ -18,5 +19,6 @@ export default (
   	<Route path = 'signup' name = 'signup' component = {SignupPage} />
   	<Route path = 'view-polls' name = 'view-polls' component = {ViewPolls} />
     <Route path = 'add-poll' name = 'add-poll' component = {AddPoll} />
+    <Route path = 'my-polls' name = 'my-polls' component = {MyPolls} />
   </Route>
 );

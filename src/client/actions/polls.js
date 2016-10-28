@@ -10,8 +10,8 @@ export function submitNewPoll(poll, token) {
 			poll,
 			token,
 		}).then( () => {
-			dispatch(retrievePolls());
 			browserHistory.push('/')
+			return dispatch(retrievePolls());
 		}).catch(err => {
 			dispatch(invalidRequest(err.response.data));
 			setTimeout( () => {
@@ -23,17 +23,17 @@ export function submitNewPoll(poll, token) {
 
 export const SAVE_POLLS = 'SAVE_POLLS'
 
-function retrievePollData(data) {
+function retrievePollData(polls) {
 	return {
 		type: SAVE_POLLS,
-		polls: data
+		polls,
 	}
 }
 
 export function retrievePolls() {
 	return dispatch => {
 		axios.get('retrieve-polls').then( (response) => {
-			dispatch(retrievePollData(response.data));
+			return dispatch(retrievePollData(response.data));
 		});
 	}
 }

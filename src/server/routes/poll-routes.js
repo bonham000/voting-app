@@ -16,10 +16,7 @@ app.get('/retrieve-polls', (req, res) => {
 		assert.equal(null, err)
 
 		// query database and return collection of all polls
-		db.collection('polls').find().toArray( (error, response) => {
-			console.log(response)
-			res.send(response)
-		});
+		db.collection('polls').find().toArray( (error, response) => {res.send(response)});
 
 		db.close();
 	});

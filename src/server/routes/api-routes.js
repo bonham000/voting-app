@@ -22,7 +22,6 @@ app.post('/api/add-poll', (req, res) => {
 					assert.equal(null, err);
 
 					db.collection('polls').insertOne(req.body.poll);
-					console.log('Inserted new poll data into database:', req.body.poll);
 
 				 	res.end();
 					db.close();

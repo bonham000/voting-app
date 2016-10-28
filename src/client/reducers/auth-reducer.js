@@ -32,7 +32,8 @@ const auth = (state = defaultState, action) => {
         isFetching: false,
         isAuthenticated: true,
         loginError: '',
-        registrationError: ''
+        registrationError: '',
+        permissionsError: ''
       });
   
     case LOGIN_FAILURE:

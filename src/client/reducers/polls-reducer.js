@@ -8,9 +8,7 @@ const polls = (state = [], action) => {
   switch (action.type) {
   
     case SAVE_POLLS:
-      return {
-      	polls: action.polls
-      }
+      return action.polls;
 
     default:
       return state;

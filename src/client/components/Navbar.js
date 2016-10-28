@@ -17,6 +17,19 @@ class Navbar extends Component {
 
             <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link>
 
+            { isAuthenticated &&
+                <Link to = 'add-poll' className = 'navLink' activeClassName = 'activeRoute'>Add Poll</Link> }
+
+              <Link to = 'view-polls' className = 'navLink' activeClassName = 'activeRoute'>View Polls</Link>
+
+            { isAuthenticated &&
+                <Link to = 'my-polls' className = 'navLink' activeClassName = 'activeRoute'>My Polls</Link> }                              
+
+            { isAuthenticated &&
+              <button className = 'navLogoutBtn' onClick={ () => dispatch(logoutUser()) }>
+                Logout
+              </button> }
+
             { !isAuthenticated &&
                 <button  className = 'navLoginBtn' >
                   <Link to = 'login' className = 'authLink'>Login</Link>
@@ -25,17 +38,6 @@ class Navbar extends Component {
             { !isAuthenticated &&
               <button  className = 'navSignupBtn' >
                 <Link to = 'signup' className = 'authLink'>Sign Up</Link>
-              </button> }
-
-            { isAuthenticated &&
-                <Link to = 'add-poll' className = 'navLink' activeClassName = 'activeRoute'>Add Poll</Link> }
-
-            { isAuthenticated &&
-                <Link to = 'view-polls' className = 'navLink' activeClassName = 'activeRoute'>View Polls</Link> }                
-
-            { isAuthenticated &&
-              <button className = 'navLogoutBtn' onClick={ () => dispatch(logoutUser()) }>
-                Logout
               </button> }
 
           </div>
