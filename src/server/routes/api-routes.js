@@ -14,16 +14,16 @@ const app = module.exports = express.Router();
 
 app.post('/api/add-poll', (req, res) => {
 
-	console.log('Inserting new poll data into database:', req.body);
-
 	let token = req.body.token;
 
 	jwt.verify(token, secret, (err, decoded) => {
 		if (!err) {
 				MongoClient.connect(url, (err, db) => {
 					assert.equal(null, err);
-					db.collection('polls').insertOne(req.body);
-					console.log('token validated, poll inserted');
+
+					db.collection('polls').insertOne(req.body.poll);
+					console.log('Inserted new poll data into database:', req.body.poll);
+
 				 	res.end();
 					db.close();
 				});

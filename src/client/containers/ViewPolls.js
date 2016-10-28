@@ -6,37 +6,48 @@ import { retrievePolls } from '../actions/polls'
 
 @connect (
 	state => ({
-		polls: state.polls
+		data: state.polls
 	}),
 	dispatch => ({ 
 		loadPolls: bindActionCreators(retrievePolls, dispatch)
 	})
 )
 class ViewPolls extends React.Component {
-	static propTypes = {
-
-	}
-	componentWillMount() {
-		console.log('sending for polls');
-		this.props.loadPolls()
-	}
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			pollData: []
+		}
+		this.selectOption = this.selectOption.bind(this);
+		this.handleVote = this.handleVote.bind(this);
 	}
+	selectOption(poll, idx) {
+		let currentPolls = this.state.polls.slice();
+		for (var a = 0; a < currentPolls.length; a++) {
+			if (currentPolls[a].title == poll.title) {
+				currentPolls[a].selected = idx;
+			}
+			console.log(currentPolls);
+		}
+		this.setState({
+			polls: currentPolls
+		});
+	}
+	handleVote(poll) {
+		if (poll.selected !== '') {
+			
+			// dispatch vote action here
+			console.log(poll);
+
+		}
+	}	
 	render() {
-		console.log('PROPS:', this.props);
-		const renderPolls = this.props.polls.polls.map( (poll, idx) => {
+		const renderPolls = this.props.data.polls.map( (poll, idx) => {
 			const renderOptions = poll.options.map( (option, idx) => {
-				let optionStyle = { background: 'rgb(25,35,45)', color: 'rgb(10,200,50)' }
-				if (poll.selected === idx) {
-					optionStyle = { background: 'rgb(10,200,50)', color: 'rgb(15,15,15)' }
-				}
 				return (
 					<div className = "optionContainer" key = {idx}>
 						<div
 							className = "option"
-							style = {optionStyle}
 							onClick = {this.selectOption.bind(this, poll, idx)}>
 							{option.option}
 						</div>
@@ -46,7 +57,6 @@ class ViewPolls extends React.Component {
 			return (
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
-					<hr />
 					{renderOptions}
 					<div className = "voteButton" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</div>
 				</div>

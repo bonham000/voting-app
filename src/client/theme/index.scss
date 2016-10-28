@@ -47,7 +47,7 @@ body {
 	  	color: white;
 	  }
 	  .navLink {
-	  	margin: 2px 8px;
+	  	margin: 2px 20px;
 	  }
 	  .authLink, .authLink:visited {
 	  	color: black
@@ -104,12 +104,16 @@ body {
 			color: #B21C34;
 		}
 	}
+	.titleInput {
+		margin-left: 0;
+	}
 	input {
 		width: 400px;
 		font-size: 25px;
 		padding: 7px;
 		margin-top: 5px;
 		margin-bottom: 5px;
+		margin-left: 20px;
 	}
 	p {
 		font-size: 25px;

@@ -1,22 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
+import { bindActionCreators } from 'redux'
+
+import { retrievePolls } from '../actions/polls'
 
 @connect(
 	state => ({
 		isAuthenticated: state.auth.isAuthenticated
+	}),
+	dispatch => ({ 
+		loadPolls: bindActionCreators(retrievePolls, dispatch)
 	})
 )
 class About extends React.Component {
 	 constructor(props) {
     super(props);
-    this.navigateCounter = this.navigateCounter.bind(this);
   }
-  navigateCounter() {
-
-    if (this.props.isAuthenticated) {
-      browserHistory.push('/counter');
-    }
+   componentWillMount() {
+    this.props.loadPolls()
   }
  	render() {
  		return (
