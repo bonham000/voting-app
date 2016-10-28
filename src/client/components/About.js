@@ -21,7 +21,7 @@ class About extends React.Component {
  	render() {
  		return (
 		  <div>
-		    <h3>This is a React/Redux Single Page Application with User Authentication</h3>
+		    <h3>Welcome to the Free Code Camp Voting App</h3>
 
 		    { !this.props.isAuthenticated && <div>
 		    	<h4>Please login or sign up to add some data.</h4>

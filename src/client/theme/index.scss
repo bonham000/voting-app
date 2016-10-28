@@ -3,33 +3,14 @@ $orange: #FF4A1F;
 body {
 	padding: 0;
 	margin: 0;
-	background: rgb(30,30,30);
-	color: #FF4A1F;
+	background: rgba(240,240,240,0.9);
+	color: rgb(25,25,25);
 	text-align: center;
 	font-size: 30px;
 }
 
-a, a:visited {
-	color: #FF4A1F;
-}
-
-input {
-	font-size: 28px;
-	padding: 8px;
-	margin: 10px;
-}
-
-button {
-	font-size: 28px;
-	padding: 5px 15px;
-	border: none;
-	background: white;
-	margin: 25px;
-}
-
 .navigationWrapper {
-	background: rgb(50,50,50);
-	border-bottom: 1px solid rgba(250,250,250,0.75);
+	background: rgb(40,40,40);
 	width: 100vw;
 	.linksWrapper {
 		margin: auto;
@@ -40,15 +21,33 @@ button {
 	  align-items: center;
 	  button {
 	  	color: black;
-	  	margin-left: 15px;
-	  	margin-right: 15px;
+			margin: 15px;
+			border: none;
+	  	padding: 5px 15px;
+	  	font-size: 28px;
+	  	background: rgba(245,245,245,1);
 	  }
+	  button:hover {
+			cursor: pointer;
+		}
+		.navLoginBtn:hover {
+			background: #51FB90;
+		}
+		.navSignupBtn:hover {
+			background: #51FB90;
+		}
+		.navLogoutBtn:hover {
+			background: #FF7052;
+		}
 	  a, a:visited {
 	  	text-decoration: none;
-	  	color: black;
+	  	color: white;
 	  }
 	  .navLink {
 	  	margin: 2px 8px;
+	  }
+	  .authLink, .authLink:visited {
+	  	color: black
 	  }
 	  .activeRoute {
 	  	color: $orange !important;
@@ -56,16 +55,78 @@ button {
 	}
 }
 
-.signupForm {
+.loginForm, .signupForm {
 	width: 600px;
 	margin: auto;
+	h1 {
+		font-size: 45px;
+	}
 	input {
+		font-size: 28px;
+		margin: 10px;
 		width: 500px;
-		padding: 15px 5px;
+		padding: 15px 10px;
+		border: 1px solid rgba(20,20,20,0.25);
 	}
 	button {
 		font-size: 32px;
 		padding: 10px 20px;
 		margin-bottom: 0;
+		border: 1px solid rgba(20,20,20,0.25);
+		background: white;
+		margin: 25px;
+	}
+	button:hover {
+		cursor: pointer;
+		background: rgba(220,220,220,0.2);
+	}
+	.errorsBox {
+		color: #E71A3A;
+	}
+}
+
+
+.addPollWrapper {
+	width: 450px;
+	margin: auto;
+	h1 {
+		font-size: 35px;
+	}
+	.optionContainer {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		.optionInput {
+			margin-right: 15px;
+		}
+		.removeOption:hover {
+			cursor: pointer;
+			color: #B21C34;
+		}
+	}
+	input {
+		width: 400px;
+		font-size: 25px;
+		padding: 7px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+	p {
+		font-size: 25px;
+	}
+	button {
+		background: white;
+		border: none;
+		font-size: 25px;
+		margin-left: 15px;
+		padding: 12px;
+		margin: 5px;
+	}
+	button:hover {
+		background: #FFD86C;
+		cursor: pointer;
+	}
+	.submitBtn:hover {
+		background: #7189F7;
 	}
 }

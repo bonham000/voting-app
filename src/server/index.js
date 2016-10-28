@@ -42,6 +42,7 @@ app.use(express.static('dist/client'));
 
 // connect authentication routes
 app.use(authRoutes);
+app.use(apiRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 

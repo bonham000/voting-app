@@ -67,7 +67,7 @@ app.post('/register', function(req, res) {
 
             res.status(201).send({
               username: user.username,
-              id_token: createToken(username)
+              id_token: createToken(user.username)
             });
 
           }
