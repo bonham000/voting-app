@@ -17,6 +17,5 @@ export function submitNewPoll(poll, token) {
 				dispatch(logoutUser())
 			}, 1000);
 		});
-			
 	}
-}
+};

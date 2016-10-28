@@ -2,7 +2,7 @@ import express from 'express'
 import assert from 'assert'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
-import config from '../config'
+import secret from '../jwt-config'
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.post('/api/add-poll', (req, res) => {
 
 	let token = req.body.token;
 
-	jwt.verify(token, config.secret, (err, decoded) => {
+	jwt.verify(token, secret, (err, decoded) => {
 		if (!err) {
 				MongoClient.connect(url, (err, db) => {
 					assert.equal(null, err);
