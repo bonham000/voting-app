@@ -17,7 +17,7 @@ const MongoClient = mongodb.MongoClient;
 const app = module.exports = express.Router();
 
 function createToken(username) {
-  return jwt.sign({user: username}, secret, { expiresIn: 60 * 60 });
+  return jwt.sign({user: username}, secret, { expiresIn: 60 * 30 });
 }
 
 // Insert a new user registration into the database

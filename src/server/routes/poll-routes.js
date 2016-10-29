@@ -12,6 +12,7 @@ const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 
+// Handle new poll submissions
 app.post('/api/add-poll', (req, res) => {
 
 	let token = req.body.token;
@@ -28,26 +29,24 @@ app.post('/api/add-poll', (req, res) => {
 				});
 		}
 		else {
-			res.status(401).send('You are not a valid user!!!');
+			res.status(401).send('You are not a valid user and are being logged out now!!!');
 		}
 	});
-
 });
 
+// Retrieve and return all poll data to the client
 app.get('/api/retrieve-polls', (req, res) => {
-
 	MongoClient.connect(url, (err, db) => {
-		
 		assert.equal(null, err)
-
 		// query database and return collection of all polls
-		db.collection('polls').find().toArray( (error, response) => { res.send(response) });
-
-		db.close();
+		db.collection('polls').find().toArray( (error, response) => {
+			res.send(response);
+			db.close();
+		});
 	});
-
 });
 
+// Handle poll votes
 app.post('/api/submit-vote', (req, res) => {
 
 	const { id, selectedOption } = req.body;
@@ -61,24 +60,57 @@ app.post('/api/submit-vote', (req, res) => {
 
 			data.options[selectedOption].votes = data.options[selectedOption].votes + 1;
 			let newOptions = data.options;
+			let newRecord = data.votingRecord.slice();
 
-			db.collection('polls').update( { _id: ObjectId(id) }, { $set: {options: newOptions} }, function(err, doc) {
-				if (err) throw err;
-					db.collection('polls').find().toArray( (err, data) => { 
-						res.send(data);
-						console.log('successful update');
-						db.close();
-					});
+			// check voting record so users can only vote once
+			let testSubmission = newRecord.filter( (record) => {
+				return record.IP !== '';
 			});
+			
+			if (testSubmission.length > 0) {
+				console.log('submission rejected');
+				res.status(401).send("You've already voted on this poll!");
+				db.close();
+			}
+			else {
+				newRecord.push({ IP: selectedOption });
 
+				db.collection('polls').update( { _id: ObjectId(id) }, { $set: {options: newOptions, votingRecord: newRecord } }, function(err, doc) {
+					if (err) throw err;
+						db.collection('polls').find().toArray( (err, data) => { 
+							res.send(data);
+							console.log('successful update');
+							db.close();
+						});
+				});
+			}
 		});
-
 	});
-
 });
 
-
-
+// allow authenticated users to remove polls
+app.post('/api/delete-poll', (req, res) => {
+	const { token, pollID } = req.body;
+	// verify user authentication
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) {
+			res.status(401).send('Only authenticated users can delete polls they author.');
+		}
+		else {
+			// if user is authenticated remove selected poll
+			MongoClient.connect(url, (err, db) => {
+				assert.equal(null, err);
+				db.collection('polls', (err, collection) => {
+					collection.deleteOne({_id: ObjectId(pollID)}, function(err, results) {
+						if (err) throw err;
+						res.status(201).send('deleted!');
+						db.close();
+					});
+				});
+			});
+		}
+	});
+});
 
 
 

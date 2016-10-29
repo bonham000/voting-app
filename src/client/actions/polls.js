@@ -16,7 +16,7 @@ export function submitNewPoll(poll, token) {
 			dispatch(invalidRequest(err.response.data));
 			setTimeout( () => {
 				dispatch(logoutUser())
-			}, 1000);
+			}, 2000);
 		});
 	}
 };
@@ -36,6 +36,8 @@ export function submitVote(vote) {
 			// need to show view page here
 			browserHistory.push('/');
 			return dispatch(retrievePolls(response.data));
+		}).catch(error => {
+			alert(error.response.data);
 		});
 	}
 }
@@ -53,6 +55,14 @@ export function retrievePolls() {
 	return dispatch => {
 		axios.get('/api/retrieve-polls').then( (response) => {
 			return dispatch(retrievePollData(response.data));
+		});
+	}
+}
+
+export function deletePoll(data) {
+	return dispatch => {
+		axios.post('/api/delete-poll', data).then( (response) => {
+			return dispatch(retrievePolls(response.data));
 		});
 	}
 }

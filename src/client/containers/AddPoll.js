@@ -99,7 +99,7 @@ class AddPoll extends React.Component {
         author: localStorage.getItem('user'),
         title: title,
         options: pollOptions,
-        selected: ''
+        votingRecord: []
       }
 
       // Poll is ready to go and can be packaged into an object for the server:
@@ -113,9 +113,7 @@ class AddPoll extends React.Component {
 
     }
   }
-  componentWillMount() {
-    window.addEventListener('keydown', this.handleKeyPress);
-  }
+  componentWillMount() { window.addEventListener('keydown', this.handleKeyPress) }
   render() {
     const { options } = this.state;
     const renderOptions = options.map( (opt, idx) => {

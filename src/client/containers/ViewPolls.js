@@ -20,6 +20,7 @@ class ViewPolls extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			results: [],
 			selected: {}
 		}
 		this.selectOption = this.selectOption.bind(this);
@@ -64,7 +65,8 @@ class ViewPolls extends React.Component {
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
 					{renderOptions}
-					<button className = "voteButton" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</button>
+					<button className = "voteBtn" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</button>
+					<button className = "resultsBtn" >View Results</button>
 				</div>
 			);
 		});
