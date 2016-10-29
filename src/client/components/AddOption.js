@@ -8,11 +8,7 @@ class AddOption extends React.Component {
 		}
 		this.handleInput = this.handleInput.bind(this);
 	}
-	handleInput(e) {
-		this.setState({
-			option: e.target.value
-		});
-	}
+	handleInput(e) { this.setState({ option: e.target.value }) }
 	render() {
 		return (
 			<div className = 'addOptionWrapper'>

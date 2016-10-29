@@ -63,8 +63,9 @@ class ViewPolls extends React.Component {
 	}
 	addOption(poll, option, idx) {
 		if (option !== '') {
+			const token = localStorage.getItem('id_token');
 			// dispatch add option action here
-			this.props.addOption(poll, option)
+			this.props.addOption(poll, option, token);
 
 			const { addOptions } = this.state;
 			let newAddOptions = addOptions.filter( (entry, idx) => {

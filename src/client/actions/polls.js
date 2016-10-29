@@ -21,10 +21,11 @@ export function submitNewPoll(poll, token) {
 	}
 };
 
-export function addOption(poll, option) {
+export function addOption(poll, option, token) {
 	const data = {
 		poll,
 		option,
+		token,
 	}
 	return dispatch => {
 		axios.post('/api/add-option', data).then( (response) => {

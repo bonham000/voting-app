@@ -10,8 +10,8 @@ class Chart extends React.Component {
 	}
 	render() {
 		return (
-			<div>
-				<h1>Chart Component</h1>
+			<div className = 'chartWrapper'>
+				<h1>Poll Results:</h1>
 				<p>{this.props.poll.title}</p>
 			</div>
 		);

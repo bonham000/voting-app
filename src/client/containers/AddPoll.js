@@ -7,7 +7,8 @@ import { submitNewPoll } from '../actions/polls'
 
 @connect(
   state => ({
-    error: state.auth.permissionsError
+    error: state.auth.permissionsError,
+    auth: state.auth.isAuthenticated
   }),
   dispatch => ({
     submitNewPoll: bindActionCreators(submitNewPoll, dispatch)
@@ -16,6 +17,7 @@ import { submitNewPoll } from '../actions/polls'
 class AddPoll extends React.Component {
   static propTypes = {
     error: React.PropTypes.string.isRequired,
+    auth: React.PropTypes.bool.isRequired,
     submitNewPoll: React.PropTypes.func.isRequired
   }
   constructor(props) {
@@ -113,7 +115,10 @@ class AddPoll extends React.Component {
 
     }
   }
-  componentWillMount() { window.addEventListener('keydown', this.handleKeyPress) }
+  componentWillMount() {
+    if (!this.state.auth) { browserHistory.push('/') }
+    window.addEventListener('keydown', this.handleKeyPress) 
+  }
   render() {
     const { options } = this.state;
     const renderOptions = options.map( (opt, idx) => {

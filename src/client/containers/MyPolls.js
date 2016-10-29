@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -14,7 +15,8 @@ function checkResults(array, idx) {
 
 @connect(
 	state => ({
-		polls: state.polls
+		polls: state.polls,
+		auth: state.auth.isAuthenticated
 	}),
 	dispatch => ({
 		delete: bindActionCreators(deletePoll, dispatch)
@@ -23,8 +25,10 @@ function checkResults(array, idx) {
 class MyPolls extends React.Component {
 	static propTypes = {
 		polls: React.PropTypes.array.isRequired,
+		auth: React.PropTypes.bool.isRequired,
 		delete: React.PropTypes.func.isRequired
 	}
+	componentWillMount() { if (!this.props.auth) { browserHistory.push('/') } }
 	constructor(props) {
 		super(props);
 		this.state = {

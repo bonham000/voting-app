@@ -35,32 +35,38 @@ app.post('/api/add-poll', (req, res) => {
 });
 
 app.post('/api/add-option', (req, res) => {
+
 	const data = req.body;
 
+	const token = data.token;
 	const ID = data.poll._id;
 	const newOption = {
 		option: data.option,
 		votes: 0
 	}
 
-	MongoClient.connect(url, (err, db) => {
-		assert.equal(null, err);
-
-		db.collection('polls').findOne({_id: ObjectId(ID)}).then( (result) => {
-			let newOptions = [...result.options, newOption];
-			db.collection('polls').update(
-			{ _id: ObjectId(ID) },
-			{ $set:
-				{
-					options: newOptions
-				}
-			}, function(err, doc) {
-				if (err) throw err;
-				console.log('Successfully added option');
-				res.status(201).send('Success');
-				db.close();
+	jwt.verify(token, secret, (err, decode) => {
+		if (!err) {
+			MongoClient.connect(url, (err, db) => {
+				assert.equal(null, err);
+				db.collection('polls').findOne({_id: ObjectId(ID)}).then( (result) => {
+					let newOptions = [...result.options, newOption];
+					db.collection('polls').update(
+					{ _id: ObjectId(ID) },
+					{ $set:
+						{
+							options: newOptions
+						}
+					}, function(err, doc) {
+						if (err) throw err;
+						console.log('Successfully added option');
+						res.status(201).send('Success');
+						db.close();
+					});
+				});
 			});
-		});
+		}
+		else { res.status(401).send('You are not an authenticated user.') }
 	});
 });
 
