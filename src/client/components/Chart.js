@@ -1,15 +1,14 @@
 import React from 'react'
 
 class Chart extends React.Component {
+	static propTypes = {
+		poll: React.PropTypes.object.isRequired
+	}
 	constructor(props) {
 		super(props);
-		this.state = {
-
-		}
-
+		this.state = {}
 	}
 	render() {
-		console.log(this.props.poll);
 		return (
 			<div>
 				<h1>Chart Component</h1>

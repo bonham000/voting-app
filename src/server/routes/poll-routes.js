@@ -34,6 +34,36 @@ app.post('/api/add-poll', (req, res) => {
 	});
 });
 
+app.post('/api/add-option', (req, res) => {
+	const data = req.body;
+
+	const ID = data.poll._id;
+	const newOption = {
+		option: data.option,
+		votes: 0
+	}
+
+	MongoClient.connect(url, (err, db) => {
+		assert.equal(null, err);
+
+		db.collection('polls').findOne({_id: ObjectId(ID)}).then( (result) => {
+			let newOptions = [...result.options, newOption];
+			db.collection('polls').update(
+			{ _id: ObjectId(ID) },
+			{ $set:
+				{
+					options: newOptions
+				}
+			}, function(err, doc) {
+				if (err) throw err;
+				console.log('Successfully added option');
+				res.status(201).send('Success');
+				db.close();
+			});
+		});
+	});
+});
+
 // Retrieve and return all poll data to the client
 app.get('/api/retrieve-polls', (req, res) => {
 	MongoClient.connect(url, (err, db) => {
@@ -75,7 +105,14 @@ app.post('/api/submit-vote', (req, res) => {
 			else {
 				newRecord.push({ IP: selectedOption });
 
-				db.collection('polls').update( { _id: ObjectId(id) }, { $set: {options: newOptions, votingRecord: newRecord } }, function(err, doc) {
+				db.collection('polls').update(
+					{ _id: ObjectId(id) },
+					{ $set:
+						{
+							options: newOptions,
+							votingRecord: newRecord
+						} 
+					}, function(err, doc) {
 					if (err) throw err;
 						db.collection('polls').find().toArray( (err, data) => { 
 							res.send(data);

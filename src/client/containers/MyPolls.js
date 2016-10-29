@@ -66,8 +66,13 @@ class MyPolls extends React.Component {
 		const renderPolls = filteredPolls.map( (poll, idx) => {
 			return (
 				<div key = {idx} className = 'pollItemWrapper'>
-					<div className = 'pollItem' onClick = {this.toggleResults.bind(this, idx)}>
+					<div className = 'pollItem'>
 						<h2>{poll.title}</h2>
+						<i
+							className = "fa fa-caret-square-o-down fa-1x infoOption"
+							aria-hidden = "true"
+							onClick = {this.toggleResults.bind(this, idx)}>
+						</i>
 						<i 
 	            className = "fa fa-times fa-1x removeOption"
 	            aria-hidden = "true"

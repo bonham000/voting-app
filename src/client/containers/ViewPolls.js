@@ -2,38 +2,46 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { submitVote } from '../actions/polls'
 import Chart from '../components/Chart'
+import AddOption from '../components/AddOption'
+
+import { submitVote } from '../actions/polls'
+import { addOption } from '../actions/polls'
 
 function checkResults(array, idx) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] === idx) { return true; }
-	}
-	return false;
+	} return false;
 }
 
 @connect (
 	state => ({
-		polls: state.polls
+		polls: state.polls,
+		isAuthenticated: state.auth.isAuthenticated
 	}),
 	dispatch => ({ 
-		dispatchVote: bindActionCreators(submitVote, dispatch)
+		dispatchVote: bindActionCreators(submitVote, dispatch),
+		addOption: bindActionCreators(addOption, dispatch)
 	})
 )
 class ViewPolls extends React.Component {
 	static propTypes = {
 		polls: PropTypes.array.isRequired,
-		dispatchVote: PropTypes.func.isRequired
+		isAuthenticated: PropTypes.bool.isRequired,
+		dispatchVote: PropTypes.func.isRequired,
+		addOption: PropTypes.func.isRequired
 	}
 	constructor(props) {
 		super(props);
 		this.state = {
 			results: [],
+			addOptions: [],
 			selected: {}
 		}
 		this.selectOption = this.selectOption.bind(this);
 		this.handleVote = this.handleVote.bind(this);
-		this.toggleResults = this.toggleResults.bind(this);
+		this.addOption = this.addOption.bind(this);
+		this.toggleMenu = this.toggleMenu.bind(this);
 	}
 	selectOption(poll, idx) {
 		const { selected } = this.state;
@@ -51,25 +59,49 @@ class ViewPolls extends React.Component {
 			selectedOption: selected[poll._id]
 		}
 		// dispatch vote action here
-		this.props.dispatchVote(vote);
+		this.props.dispatchVote(vote)
 	}
-	toggleResults(idx) {
-		const { results } = this.state;
+	addOption(poll, option, idx) {
+		if (option !== '') {
+			// dispatch add option action here
+			this.props.addOption(poll, option)
 
-		let newResults = [];
-
-		if (checkResults(results, idx)) {
-			newResults = results.filter( (entry) => {
+			const { addOptions } = this.state;
+			let newAddOptions = addOptions.filter( (entry, idx) => {
 				return entry !== idx;
 			});
+			this.setState({ addOptions: newAddOptions });
+
+		}
+	}
+	toggleMenu(idx, targetState) {
+		
+		const { results, addOptions } = this.state;
+
+		let newResults = [];
+		let newAddOptions = [];
+
+		// toggle menu state for result and add poll options separately for all polls
+		if (targetState === 'results' && checkResults(results, idx)) {
+			newResults = results.filter( (entry) => { return entry !== idx; });
+			newAddOptions = addOptions;
+		}
+		else if (targetState === 'results') {
+			newResults = [...results, idx]
+			newAddOptions = addOptions.filter( (entry) => { return entry !== idx; });
+		}
+		else if (targetState === 'add' && checkResults(addOptions, idx)) {
+			newAddOptions = addOptions.filter( (entry) => { return entry !== idx; });
+			newResults = results;
 		}
 		else {
-			newResults = [...results, idx]
+			newAddOptions = [...addOptions, idx];
+			newResults = results.filter( (entry) => { return entry !== idx; });
 		}
 
-		this.setState({
-			results: newResults
-		})
+		if (targetState === 'results') { this.setState({ results: newResults, addOptions: newAddOptions }) }
+		else if (targetState === 'add') { this.setState({ results: newResults, addOptions: newAddOptions }) }
+
 	}
 	render() {
 		let selected = this.state.selected;
@@ -88,13 +120,29 @@ class ViewPolls extends React.Component {
 					</div>
 				);
 			});
-			const { results } = this.state;
+			const { results, addOptions } = this.state;
 			return (
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
 					{renderOptions}
-					<button className = "voteBtn" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</button>
-					<button className = "resultsBtn" onClick = {this.toggleResults.bind(this, idx)} >{ checkResults(results, idx) ? 'Hide' : 'View' } Results</button>
+					{this.props.isAuthenticated && <div className = "optionContainer" key = {idx}>
+						<div
+							className = "option addOption"
+							onClick = {this.toggleMenu.bind(this, idx, 'add')}>
+							Don't like the choices? Add a new one!
+						</div>
+					</div>}
+						<button
+							className = "voteBtn"
+							onClick = {this.handleVote.bind(this, poll)}>
+							Cast Your Vote!
+						</button>
+						<button
+							className = "resultsBtn"
+							onClick = { this.toggleMenu.bind(this, idx, 'results')}>
+							{ checkResults(results, idx) ? 'Hide' : 'View' } Results
+						</button>
+					{checkResults(addOptions, idx) && <AddOption poll = {poll} idx = {idx} AddOption = {this.addOption} /> }
 					{checkResults(results, idx) && <Chart poll = {poll} /> }
 				</div>
 			);

@@ -21,6 +21,19 @@ export function submitNewPoll(poll, token) {
 	}
 };
 
+export function addOption(poll, option) {
+	const data = {
+		poll,
+		option,
+	}
+	return dispatch => {
+		axios.post('/api/add-option', data).then( (response) => {
+			browserHistory.push('/view-polls')
+			dispatch(retrievePolls());
+		}).catch(err => console.log(err.response.data));
+	}
+}
+
 export const VOTE_SUBMITTED = 'VOTE_SUBMITTED'
 
 function voteSubmitted(data) {
