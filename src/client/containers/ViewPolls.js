@@ -60,6 +60,11 @@ class ViewPolls extends React.Component {
 		}
 		// dispatch vote action here
 		this.props.dispatchVote(vote)
+		this.setState({
+			results: [],
+			addOptions: [],
+			selected: {}
+		});
 	}
 	addOption(poll, option, idx) {
 		if (option !== '') {

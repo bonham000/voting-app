@@ -292,6 +292,15 @@ body {
 	margin-top: 25px;
 	margin-bottom: 15px;
 	border-top: 1px solid black;
+	.twitterBtn {
+		margin-left: 7px;
+	}
+	.twitterBtn, .twitterBtn:visited {
+		color: black;
+	}
+	.twitterBtn:hover {
+		color: $orange;
+	}
 }
 
 

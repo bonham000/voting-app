@@ -98,6 +98,8 @@ app.post('/api/submit-vote', (req, res) => {
 			let newOptions = data.options;
 			let newRecord = data.votingRecord.slice();
 
+			// add check against username here:
+			
 			// check voting record so users can only vote once
 			let testSubmission = newRecord.filter( (record) => {
 				return record.IP !== '';

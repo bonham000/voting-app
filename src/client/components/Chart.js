@@ -17,9 +17,14 @@ class Chart extends React.Component {
 				label: option.option
 			}
 		});
+		const text = "https://twitter.com/intent/tweet?text=Vote on " + this.props.poll.title + " at http://localhost:3000!"
 		return (
 			<div className = 'chartWrapper'>
-				<h1>Poll Results:</h1>
+				<h1>Poll Results
+					<a className = 'twitterBtn' target = "_blank" href = {text}>
+						<i className="fa fa-twitter" aria-hidden="true"></i>
+					</a>
+				</h1>
 				<Pie chartData = {data} />
 			</div>
 		);

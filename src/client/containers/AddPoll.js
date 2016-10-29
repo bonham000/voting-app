@@ -116,7 +116,7 @@ class AddPoll extends React.Component {
     }
   }
   componentWillMount() {
-    if (!this.state.auth) { browserHistory.push('/') }
+    if (!this.props.auth) { browserHistory.push('/') }
     window.addEventListener('keydown', this.handleKeyPress) 
   }
   render() {
