@@ -3,6 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { submitVote } from '../actions/polls'
+import Chart from '../components/Chart'
+
+function checkResults(array, idx) {
+	for (let i = 0; i < array.length; i++) {
+		if (array[i] === idx) { return true; }
+	}
+	return false;
+}
 
 @connect (
 	state => ({
@@ -25,6 +33,7 @@ class ViewPolls extends React.Component {
 		}
 		this.selectOption = this.selectOption.bind(this);
 		this.handleVote = this.handleVote.bind(this);
+		this.toggleResults = this.toggleResults.bind(this);
 	}
 	selectOption(poll, idx) {
 		const { selected } = this.state;
@@ -43,7 +52,25 @@ class ViewPolls extends React.Component {
 		}
 		// dispatch vote action here
 		this.props.dispatchVote(vote);
-	}	
+	}
+	toggleResults(idx) {
+		const { results } = this.state;
+
+		let newResults = [];
+
+		if (checkResults(results, idx)) {
+			newResults = results.filter( (entry) => {
+				return entry !== idx;
+			});
+		}
+		else {
+			newResults = [...results, idx]
+		}
+
+		this.setState({
+			results: newResults
+		})
+	}
 	render() {
 		let selected = this.state.selected;
 		const renderPolls = this.props.polls.map( (poll, idx) => {
@@ -61,12 +88,14 @@ class ViewPolls extends React.Component {
 					</div>
 				);
 			});
+			const { results } = this.state;
 			return (
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
 					{renderOptions}
 					<button className = "voteBtn" onClick = {this.handleVote.bind(this, poll)}>Cast Your Vote!</button>
-					<button className = "resultsBtn" >View Results</button>
+					<button className = "resultsBtn" onClick = {this.toggleResults.bind(this, idx)} >{ checkResults(results, idx) ? 'Hide' : 'View' } Results</button>
+					{checkResults(results, idx) && <Chart poll = {poll} /> }
 				</div>
 			);
 		});

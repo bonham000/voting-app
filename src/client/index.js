@@ -17,8 +17,6 @@ const store = configureStore();
 
 store.dispatch(retrievePolls());
 
-
-
 render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />

@@ -209,31 +209,37 @@ body {
 	h1 {
 		font-size: 35px;
 	}
-	.pollItem {
-		width: 600px;
-		margin: 7px auto;
-		padding-top: 15px;
-		padding-bottom: 15px;
+	.pollItemWrapper {
 		background: rgba(150,150,150,0.2);
 		border: 1px solid rgba(150,150,150,0.5);
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		justify-content: center;
-		h2 {
-			margin: 0;
-		}
-		.removeOption {
-			font-size: 45px;
-			position: absolute;
-			margin-left: 265px;
-			margin-top: 3px;
-		}
-		.removeOption:hover {
-			cursor: pointer;
-			color: #E90542;
+		padding: 25px;
+		margin: 10px auto;
+		width: 650px;
+		.pollItem {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: center;
+			h2 {
+				margin: 0;
+			}
+			.removeOption {
+				font-size: 45px;
+				position: absolute;
+				margin-left: 300px;
+				margin-top: 0px;
+			}
+			.removeOption:hover {
+				cursor: pointer;
+				color: #E90542;
+			}
 		}
 	}
+}
+.pollItemWrapper:hover {
+	cursor: pointer;
+	background: rgba(150,150,150,0.3);
+	border: 1px solid rgba(50,50,50,0.5);
 }
 
 

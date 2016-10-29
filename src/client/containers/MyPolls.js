@@ -2,7 +2,15 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import Chart from '../components/Chart'
 import { deletePoll } from '../actions/polls'
+
+function checkResults(array, idx) {
+	for (let i = 0; i < array.length; i++) {
+		if (array[i] === idx) { return true; }
+	}
+	return false;
+}
 
 @connect(
 	state => ({
@@ -19,7 +27,11 @@ class MyPolls extends React.Component {
 	}
 	constructor(props) {
 		super(props);
+		this.state = {
+			results: []
+		}
 		this.removePoll = this.removePoll.bind(this);
+		this.toggleResults = this.toggleResults.bind(this);
 	}
 	removePoll(id) {
 		const data = {
@@ -28,19 +40,43 @@ class MyPolls extends React.Component {
 		}
 		this.props.delete(data);
 	}
+	toggleResults(idx) {
+		const { results } = this.state;
+
+		let newResults = [];
+
+		if (checkResults(results, idx)) {
+			newResults = results.filter( (entry) => {
+				return entry !== idx;
+			});
+		}
+		else {
+			newResults = [...results, idx]
+		}
+
+		this.setState({
+			results: newResults
+		})
+	}
 	render() {
 		const filteredPolls = this.props.polls.filter( (poll) => {
 			return poll.author === localStorage.getItem('user')
 		});
+		const { results } = this.state
 		const renderPolls = filteredPolls.map( (poll, idx) => {
 			return (
-				<div key = {idx} className = 'pollItem'>
-					<h2>{poll.title}</h2>
-					<i 
-            className = "fa fa-times fa-1x removeOption"
-            aria-hidden = "true"
-            onClick = {this.removePoll.bind(this, poll._id)}>
-          </i>
+				<div key = {idx} className = 'pollItemWrapper'>
+					<div className = 'pollItem' onClick = {this.toggleResults.bind(this, idx)}>
+						<h2>{poll.title}</h2>
+						<i 
+	            className = "fa fa-times fa-1x removeOption"
+	            aria-hidden = "true"
+	            onClick = {this.removePoll.bind(this, poll._id)}>
+	          </i>
+					</div>
+					<div>
+						{checkResults(results, idx) && <Chart poll = {poll} /> }
+					</div>
 				</div>
 			);
 		});
