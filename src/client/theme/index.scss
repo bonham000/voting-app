@@ -21,13 +21,18 @@ body {
 .aboutWrapper {
 	h1 {
 		font-size: 50px;
+		width: 85vw;
+		margin: 25px auto 0 auto;
+	}
+	h2 {
+		font-size: 45px;
 	}
 	p {
-		width: 800px;
+		width: 65vw;
 		margin: auto;
 	}
 	h3 {
-		width: 750px;
+		width: 75vw;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -38,6 +43,9 @@ body {
 	a:hover {
 		color: $orange;
 	}
+	.credits {
+	  	width: 55vw;
+	 }
 }
 
 .navigationWrapper {
@@ -61,12 +69,6 @@ body {
 	  button:hover {
 			cursor: pointer;
 		}
-		.navLoginBtn:hover {
-			background: rgba(250,250,250,0.8);
-		}
-		.navSignupBtn:hover {
-			background: rgba(250,250,250,0.8);
-		}
 		.navLogoutBtn:hover {
 			background: #E90542;
 			color: black;
@@ -76,13 +78,10 @@ body {
 	  	color: white;
 	  }
 	  .navLink {
-	  	margin: 2px 20px;
+	  	margin: 10px 20px;
 	  }
 	  .navLink:hover {
 			color: rgba(250,250,250,0.85);
-	  }
-	  .authLink, .authLink:visited {
-	  	color: black
 	  }
 	  .activeRoute {
 	  	color: $orange !important;
@@ -136,7 +135,6 @@ body {
 			cursor: pointer;
 			color: #E90542;
 		}
-
 	}
 	input {
 		width: 400px;
@@ -174,9 +172,6 @@ body {
 .viewPollsContainer {
 	padding-top: 25px;
 	padding-bottom: 25px;
-	h1 {
-		font-size: 35px;
-	}
 	.pollWrapper {
 		h2 {
 			margin: 5px auto 15px auto;
@@ -222,6 +217,9 @@ body {
 			}
 		}
 		.addOptionWrapper {
+			h1 {
+				font-size: 34px;
+			}
 			input {
 				width: 400px;
 				font-size: 25px;
@@ -248,14 +246,16 @@ body {
 .myPollsContainer {
 	padding-top: 25px;
 	h1 {
-		font-size: 35px;
+		font-size: 34px;
 	}
 	.pollItemWrapper {
 		background: rgba(150,150,150,0.2);
 		border: 1px solid rgba(150,150,150,0.5);
 		padding: 25px;
+		padding-right: 50px;
 		margin: 10px auto;
-		width: 650px;
+		width: 70vw;
+		position: relative;
 		.pollItem {
 			display: flex;
 			flex-direction: row;
@@ -263,26 +263,28 @@ body {
 			justify-content: center;
 			h2 {
 				margin: 0;
+				font-size: 28px;
 			}
-			.infoOption {
-				font-size: 45px;
+			.optionsWrapper {
 				position: absolute;
-				margin-left: 255px;
-				margin-top: 0px;
-			}
-			.infoOption:hover {
-				cursor: pointer;
-				color: #3958FF;
-			}
-			.removeOption {
-				font-size: 45px;
-				position: absolute;
-				margin-left: 300px;
-				margin-top: 0px;
-			}
-			.removeOption:hover {
-				cursor: pointer;
-				color: #E90542;
+				right: 10px;
+				top: 15px;
+				.infoOption {
+					font-size: 45px;
+					margin-right: 3px;
+				}
+				.infoOption:hover {
+					cursor: pointer;
+					color: #3958FF;
+				}
+				.removeOption {
+					font-size: 45px;
+					margin-left: 3px;
+				}
+				.removeOption:hover {
+					cursor: pointer;
+					color: #E90542;
+				}
 			}
 		}
 	}
@@ -304,11 +306,117 @@ body {
 }
 
 
+@media only screen and (max-width: 750px) {
+	.viewPollsContainer {
+		padding-top: 15px;
+		padding-bottom: 15px;
+		.pollWrapper {
+			h2 {
+				margin: 5px auto 15px auto;
+				font-size: 30px
+			}
+			padding: 25px;
+			margin: 10px auto;
+			width: 85vw;
+			button {
+				font-size: 18px;
+				padding: 8px 4px;
+				margin: 6px;
+				width: 35vw;
+			}
+			.optionContainer {
+				.option {
+					width: 80vw;
+					margin: 5px auto;
+					padding: 6px;
+					font-size: 24px;
+				}
+			}
+			.addOptionWrapper {
+				h1 {
+					font-size: 28px;
+				}
+				input {
+					width: 80vw;
+					font-size: 22px;
+					padding: 6px;
+					margin-top: 5px;
+					margin-bottom: 5px;
+					margin-left: 0px;
+				}
+				.addOptionBtn {
+					width: 50vw;
+					font-size: 20px;
+					margin: 5px;
+				}
+			}
+		}
+	}
+	.myPollsContainer {
+		padding-top: 15px;
+		h1 {
+			font-size: 32px;
+		}
+		.pollItemWrapper {
+			padding: 15px;
+			padding-right: 50px;
+			margin: 10px auto;
+			width: 80vw;
+			.pollItem {
+				padding-right: 40px;
+				h2 {
+					margin: 0;
+					font-size: 24px;
+				}
+				.optionsWrapper {
+					position: absolute;
+					right: 5px;
+					top: 7px;
+					.infoOption, .removeOption {
+						font-size: 40px;
+					}
+				}
+			}
+		}
+	}
+	.chartWrapper {
+		margin-top: 8px;
+		margin-bottom: 12px;
+		border-top: 1px solid black;
+		h1 {
+			font-size: 28px;
+		}
+		.twitterBtn {
+			margin-left: 7px;
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.loginForm, .signupForm {
+		width: 100vw;
+		margin: auto;
+		h1 {
+			font-size: 40px;
+		}
+		input {
+			font-size: 24px;
+			margin: 8px;
+			width: 80vw;
+			padding: 12px 8px;
+		}
+		button {
+			font-size: 28px;
+			padding: 8px 16px;
+			margin: 18px;
+		}
+	}
+}
+
 @media only screen and (max-width: 650px) {
 	.navigationWrapper {
-		.navLink {
-			width: 100vw;
-		}
+		padding-top: 5px;
+		padding-bottom: 10px;
 		.linksWrapper {
 			margin: auto;
 		  display: flex;
@@ -316,8 +424,70 @@ body {
 		  flex-wrap: wrap;
 		  justify-content: center;
 		  align-items: center;
+		  padding: 5px auto;
+		  .navLink {
+		  	font-size: 28px;
+		  	margin: 5px;
+		  	width: 100vw;
+		  }
+		  button {
+		  	background: none;
+		  	border: none;
+		  	font-size: 28px;
+				margin: 0;
+				padding: 0;
+		  }
 		}
 	}
+	.aboutWrapper {
+		h1 {
+			font-size: 33px;
+			margin-top: 15px;
+		}
+		h2 {
+			font-size: 30px;
+		}
+		h3 {
+			font-size: 28px;
+			width: 90vw;
+		}
+		p {
+			font-size: 22px;
+		}
+		p {
+			width: 85vw;
+		}
+		.credits {
+			width: 85vw;
+		}
+	}
+	.addPollContainer {
+		width: 100vw;
+		h1 {
+			font-size: 30px;
+		}
+		input {
+			width: 80vw;
+			margin: 5px;
+			font-size: 22px;
+		}
+		.optionContainer {
+			.removeOption {
+				margin-top: 2px;
+			}
+		}
+		.btnContainer {
+			button {
+				background: white;
+				border: none;
+				font-size: 20px;
+				margin-top: 5px;
+				margin-left: 15px;
+				padding: 8px;
+				margin: 5px;
+			}
+		}
+	}	
 }
 
 

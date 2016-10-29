@@ -18,27 +18,21 @@ class Navbar extends Component {
             <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link>
 
             { isAuthenticated &&
-                <Link to = 'add-poll' className = 'navLink' activeClassName = 'activeRoute'>Add Poll</Link> }
+              <Link to = 'add-poll' className = 'navLink' activeClassName = 'activeRoute'>Add Poll</Link> }
 
               <Link to = 'view-polls' className = 'navLink' activeClassName = 'activeRoute'>View Polls</Link>
 
             { isAuthenticated &&
-                <Link to = 'my-polls' className = 'navLink' activeClassName = 'activeRoute'>My Polls</Link> }                              
+              <Link to = 'my-polls' className = 'navLink' activeClassName = 'activeRoute'>My Polls</Link> }                              
 
             { isAuthenticated &&
-              <button className = 'navLogoutBtn' onClick={ () => dispatch(logoutUser()) }>
-                Logout
-              </button> }
+              <Link to = '#' className = 'navLink' onClick = { () => dispatch(logoutUser()) }>Logout</Link> }
 
             { !isAuthenticated &&
-                <button  className = 'navLoginBtn' >
-                  <Link to = 'login' className = 'authLink'>Login</Link>
-                </button> }
+              <Link to = 'login' className = 'navLink' activeClassName = 'activeRoute'>Login</Link> }
 
             { !isAuthenticated &&
-              <button  className = 'navSignupBtn' >
-                <Link to = 'signup' className = 'authLink'>Sign Up</Link>
-              </button> }
+              <Link to = 'signup' className = 'navLink' activeClassName = 'activeRoute'>Sign Up</Link> }
 
           </div>
         </div>

@@ -85,8 +85,11 @@ app.get('/api/retrieve-polls', (req, res) => {
 // Handle poll votes
 app.post('/api/submit-vote', (req, res) => {
 
-	const { id, selectedOption } = req.body;
+	const { id, selectedOption, user } = req.body;
 	const IP = req.connection.remoteAddress;
+
+	// Set identity to username if user is authenticated, otherwise use IP address
+	const identity = user ? user !== '' : IP;
 
 	MongoClient.connect(url, (err, db) => {
 
@@ -94,16 +97,16 @@ app.post('/api/submit-vote', (req, res) => {
 
 		db.collection('polls').findOne({_id: ObjectId(id)}).then( (data) => {
 
+			// update vote count of selected poll by one
 			data.options[selectedOption].votes = data.options[selectedOption].votes + 1;
+
 			let newOptions = data.options;
 			let newRecord = data.votingRecord.slice();
 
 			// add check against username here:
 			
 			// check voting record so users can only vote once
-			let testSubmission = newRecord.filter( (record) => {
-				return record.IP !== '';
-			});
+			let testSubmission = newRecord.filter( (record) => { return record.identity !== ''; });
 			
 			if (testSubmission.length > 0) {
 				console.log('submission rejected');
@@ -111,7 +114,7 @@ app.post('/api/submit-vote', (req, res) => {
 				db.close();
 			}
 			else {
-				newRecord.push({ IP: selectedOption });
+				newRecord.push({ [identity]: selectedOption });
 
 				db.collection('polls').update(
 					{ _id: ObjectId(id) },

@@ -30,13 +30,13 @@ if (NODE_ENV === 'development') {
 }
 
 // test connection to database
-MongoClient.connect(url, (err, db) => {
+// MongoClient.connect(url, (err, db) => {
 	
-	assert.equal(null, err);
-	console.log('Connection to MongoDB Established');
+// 	assert.equal(null, err);
+// 	console.log('Connection to MongoDB Established');
 
-	db.close();
-});
+// 	db.close();
+// });
 
 app.use(express.static('dist/client'));
 

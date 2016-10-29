@@ -72,16 +72,18 @@ class MyPolls extends React.Component {
 				<div key = {idx} className = 'pollItemWrapper'>
 					<div className = 'pollItem'>
 						<h2>{poll.title}</h2>
-						<i
-							className = "fa fa-caret-square-o-down fa-1x infoOption"
-							aria-hidden = "true"
-							onClick = {this.toggleResults.bind(this, idx)}>
-						</i>
-						<i 
-	            className = "fa fa-times fa-1x removeOption"
-	            aria-hidden = "true"
-	            onClick = {this.removePoll.bind(this, poll._id)}>
-	          </i>
+						<div className = 'optionsWrapper'>
+							<i
+								className = "fa fa-caret-square-o-down fa-1x infoOption"
+								aria-hidden = "true"
+								onClick = {this.toggleResults.bind(this, idx)}>
+							</i>
+							<i 
+		            className = "fa fa-times fa-1x removeOption"
+		            aria-hidden = "true"
+		            onClick = {this.removePoll.bind(this, poll._id)}>
+		          </i>
+						</div>
 					</div>
 					<div>
 						{checkResults(results, idx) && <Chart poll = {poll} /> }

@@ -17,6 +17,13 @@ class Chart extends React.Component {
 				label: option.option
 			}
 		});
+		const chartOptions = {
+	    segmentShowStroke: false,
+	    animateRotate: true,
+	    animateScale: false,
+	    percentageInnerCutout: 50,
+	    tooltipTemplate: "<%= value %>%"
+		}
 		const text = "https://twitter.com/intent/tweet?text=Vote on " + this.props.poll.title + " at http://localhost:3000!"
 		return (
 			<div className = 'chartWrapper'>
@@ -25,7 +32,7 @@ class Chart extends React.Component {
 						<i className="fa fa-twitter" aria-hidden="true"></i>
 					</a>
 				</h1>
-				<Pie chartData = {data} />
+				<Pie chartData = {data} options = {chartOptions} />
 			</div>
 		);
 	}
