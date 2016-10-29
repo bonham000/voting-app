@@ -125,6 +125,7 @@ class ViewPolls extends React.Component {
 			return (
 				<div className = "pollWrapper" key = {idx}>
 					<h2>{poll.title}</h2>
+					{checkResults(results, idx) && <Chart poll = {poll} /> }
 					{renderOptions}
 					{this.props.isAuthenticated && <div className = "optionContainer" key = {idx}>
 						<div
@@ -144,13 +145,11 @@ class ViewPolls extends React.Component {
 							{ checkResults(results, idx) ? 'Hide' : 'View' } Results
 						</button>
 					{checkResults(addOptions, idx) && <AddOption poll = {poll} idx = {idx} AddOption = {this.addOption} /> }
-					{checkResults(results, idx) && <Chart poll = {poll} /> }
 				</div>
 			);
 		});
 		return (
 			<div className = 'viewPollsContainer'>
-				<h1>All Polls</h1>
 				{renderPolls}
 			</div>
 		);
