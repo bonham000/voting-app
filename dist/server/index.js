@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _express = require('express');
@@ -19,14 +19,6 @@ var _path2 = _interopRequireDefault(_path);
 var _expressHistoryApiFallback = require('express-history-api-fallback');
 
 var _expressHistoryApiFallback2 = _interopRequireDefault(_expressHistoryApiFallback);
-
-var _dev = require('./config/setup/dev');
-
-var _dev2 = _interopRequireDefault(_dev);
-
-var _prod = require('./config/setup/prod');
-
-var _prod2 = _interopRequireDefault(_prod);
 
 var _env = require('./config/env');
 
@@ -53,6 +45,9 @@ var _pollRoutes2 = _interopRequireDefault(_pollRoutes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
+//import devConfig from './config/setup/dev'
+//import prodConfig from './config/setup/prod'
+
 var url = process.env.MONGO_HOST;
 //const url = 'mongodb://mongo:mongo@ds057816.mlab.com:57816/fcc-voting-app'
 
@@ -63,17 +58,17 @@ var app = (0, _express2.default)();
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
 
-if (_env.NODE_ENV === 'development') {
-  (0, _dev2.default)(app);
-} else {
-  (0, _prod2.default)(app);
-}
+// if (NODE_ENV === 'development') {
+//   devConfig(app);
+// } else {
+//   prodConfig(app);
+// }
 
 //test connection to Mongo
 MongoClient.connect(url, function (err, db) {
-  _assert2.default.equal(null, err);
-  console.log('Connection to MongoDB Established');
-  db.close();
+	_assert2.default.equal(null, err);
+	console.log('Connection to MongoDB Established');
+	db.close();
 });
 
 app.use(_express2.default.static('dist/client'));
@@ -84,9 +79,11 @@ app.use(_pollRoutes2.default);
 
 app.use((0, _expressHistoryApiFallback2.default)(_path2.default.join(__dirname, '../../dist/client/index.html')));
 
-app.listen(process.env.PORT || 5000, function (err) {
-  if (err) throw err;
-  console.log('The Express Server is Listening in ' + _env.NODE_ENV + ' mode');
+var port = process.env.PORT || 5000;
+
+app.listen(port || 5000, function (err) {
+	if (err) throw err;
+	console.log('The Express Server is Listening at ' + port + ' in ' + _env.NODE_ENV + ' mode');
 });
 
 exports.default = app;

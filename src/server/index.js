@@ -2,8 +2,8 @@ import express from 'express'
 import assert from 'assert'
 import path from 'path'
 import fallback from 'express-history-api-fallback'
-import devConfig from './config/setup/dev'
-import prodConfig from './config/setup/prod'
+//import devConfig from './config/setup/dev'
+//import prodConfig from './config/setup/prod'
 import { NODE_ENV } from './config/env'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
@@ -23,11 +23,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-if (NODE_ENV === 'development') {
-  devConfig(app);
-} else {
-  prodConfig(app);
-}
+// if (NODE_ENV === 'development') {
+//   devConfig(app);
+// } else {
+//   prodConfig(app);
+// }
 
 //test connection to Mongo
 MongoClient.connect(url, (err, db) => {
@@ -44,9 +44,11 @@ app.use(pollRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 
-app.listen(process.env.PORT || 5000, (err) => {
+const port = process.env.PORT || 5000;
+
+app.listen(port || 5000, (err) => {
   if (err) throw err;
-  console.log(`The Express Server is Listening in ${NODE_ENV} mode`);
+  console.log(`The Express Server is Listening at ${port} in ${NODE_ENV} mode`);
 });
 
 export default app;
