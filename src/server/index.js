@@ -2,15 +2,14 @@ import express from 'express'
 import assert from 'assert'
 import path from 'path'
 import fallback from 'express-history-api-fallback'
-//import devConfig from './config/setup/dev'
-//import prodConfig from './config/setup/prod'
-import { NODE_ENV } from './config/env'
+import devConfig from './config/setup/dev'
+import prodConfig from './config/setup/prod'
+import { NODE_ENV, PORT } from './config/env'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 
 dotenv.config();
 const url = process.env.MONGO_HOST;
-//const url = 'mongodb://mongo:mongo@ds057816.mlab.com:57816/fcc-voting-app'
 
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
@@ -23,11 +22,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// if (NODE_ENV === 'development') {
-//   devConfig(app);
-// } else {
-//   prodConfig(app);
-// }
+if (NODE_ENV === 'development') {
+  devConfig(app);
+} else {
+  prodConfig(app);
+}
 
 //test connection to Mongo
 MongoClient.connect(url, (err, db) => {
@@ -44,11 +43,9 @@ app.use(pollRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 
-const port = process.env.PORT || 5000;
-
-app.listen(port || 5000, (err) => {
+app.listen(PORT, (err) => {
   if (err) throw err;
-  console.log(`The Express Server is Listening at ${port} in ${NODE_ENV} mode`);
+  console.log(`The Express Server is Listening at ${PORT} in ${NODE_ENV} mode`);
 });
 
 export default app;
