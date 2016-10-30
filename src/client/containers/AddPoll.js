@@ -24,7 +24,9 @@ class AddPoll extends React.Component {
     super(props);
     this.state = {
       title: '',
-      options: ['']
+      options: [''],
+      alertTitle: false,
+      alertOptions: false
     }
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -80,13 +82,14 @@ class AddPoll extends React.Component {
     }
   }
   submitPoll() {
+
     let { title, options } = this.state;
 
     options = options.filter( (item) => {
       return item !== ''
     });
 
-    if (title !== '' && options.length > 0) {
+    if (title !== '' && options.length > 1) {
 
       let pollOptions = [];
       // Add a votes category associated with each option
@@ -113,6 +116,21 @@ class AddPoll extends React.Component {
 
       this.props.submitNewPoll(pollData, token);
 
+    } else if (title === '' && options.length <= 1) {
+      this.setState({
+        alertTitle: true,
+        alertOptions: true
+      });
+    } else if (title !== '' && options.length < 1) {
+      this.setState({
+        alertTitle: false,
+        alertOptions: true 
+      });
+    } else if (title === '' && options.length > 1) {
+      this.setState({
+        alertTitle: true,
+        alertOptions: false
+      });
     }
   }
   componentWillMount() {
@@ -143,6 +161,7 @@ class AddPoll extends React.Component {
     return (
       <div className = "addPollContainer">
         <h1>Submit a New Poll</h1>
+        { this.state.alertTitle && <p className = 'alertMsg'>A poll must have a question!</p> }
         { this.props.error && <div className = 'errorsBox'>{this.props.error}</div> }
             <input
               className = "titleInput"
@@ -153,6 +172,7 @@ class AddPoll extends React.Component {
               onChange = {this.handleChange} />
               <p>Poll Options:</p>
               {renderOptions}
+              { this.state.alertOptions && <p className = 'alertMsg'>You have to add at least two options!</p> }
           <div className = 'btnContainer'>
             <button className = 'addBtn' onClick = {this.addOption}>Add Option</button>
             <button className = 'submitBtn' onClick = {this.submitPoll}>Submit New Poll</button>

@@ -10,7 +10,7 @@ export function submitNewPoll(poll, token) {
 			poll,
 			token,
 		}).then( () => {
-			browserHistory.push('/')
+			browserHistory.push('/view-polls')
 			return dispatch(retrievePolls());
 		}).catch(err => {
 			dispatch(invalidRequest(err.response.data));
@@ -48,8 +48,9 @@ export function submitVote(vote) {
 	return dispatch => {
 		axios.post('/api/submit-vote', vote).then( (response) => {
 			// need to show view page here
-			browserHistory.push('/');
-			return dispatch(retrievePolls(response.data));
+			return dispatch(retrievePolls(response.data).then( () => {
+				browserHistory.push('/');
+			}));
 		}).catch(error => {
 			alert(error.response.data);
 		});

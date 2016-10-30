@@ -57,14 +57,15 @@ class ViewPolls extends React.Component {
 		const vote = {
 			id: poll._id,
 			selectedOption: selected[poll._id],
-			user: localStorage.getItem('User')
+			user: localStorage.getItem('user')
 		}
 		// dispatch vote action here
-		this.props.dispatchVote(vote)
-		this.setState({
-			results: [],
-			addOptions: [],
-			selected: {}
+		this.props.dispatchVote(vote).then( () => {
+			this.setState({
+				results: [],
+				addOptions: [],
+				selected: {}
+			});
 		});
 	}
 	addOption(poll, option, idx) {
@@ -112,7 +113,8 @@ class ViewPolls extends React.Component {
 	}
 	render() {
 		let selected = this.state.selected;
-		const renderPolls = this.props.polls.map( (poll, idx) => {
+		const { polls } = this.props;
+		const renderPolls = polls.map( (poll, idx) => {
 			const renderOptions = poll.options.map( (option, idx) => {
 				let optionStyle = { background: 'rgba(250,250,250,0.65)' }
 				if (!isNaN(selected[poll._id]) && selected[poll._id] == idx) { optionStyle = { background: '#FFE66D' } }

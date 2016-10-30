@@ -89,7 +89,9 @@ app.post('/api/submit-vote', (req, res) => {
 	const IP = req.connection.remoteAddress;
 
 	// Set identity to username if user is authenticated, otherwise use IP address
-	const identity = user ? user !== '' : IP;
+	let identity = IP;
+
+	if (user !== '') { identity = user; }
 
 	MongoClient.connect(url, (err, db) => {
 
@@ -127,7 +129,7 @@ app.post('/api/submit-vote', (req, res) => {
 					if (err) throw err;
 						db.collection('polls').find().toArray( (err, data) => { 
 							res.send(data);
-							console.log('successful update');
+							console.log('successfully voted');
 							db.close();
 						});
 				});

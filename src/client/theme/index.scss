@@ -69,10 +69,6 @@ body {
 	  button:hover {
 			cursor: pointer;
 		}
-		.navLogoutBtn:hover {
-			background: #E90542;
-			color: black;
-		}
 	  a, a:visited {
 	  	text-decoration: none;
 	  	color: white;
@@ -167,11 +163,25 @@ body {
 			background: #7189F7;
 		}
 	}
+	.alertMsg {
+		color: #E71A3A;
+	}
 }
 
 .viewPollsContainer {
 	padding-top: 25px;
 	padding-bottom: 25px;
+		button {
+		background: white;
+		border: none;
+		font-size: 25px;
+		padding: 12px;
+		margin: 15px;
+		width: 200px;
+	}
+	button:hover {
+		cursor: pointer;
+	}
 	.pollWrapper {
 		h2 {
 			margin: 5px auto 15px auto;
@@ -181,17 +191,7 @@ body {
 		padding: 25px;
 		margin: 10px auto;
 		width: 650px;
-		button {
-			background: white;
-			border: none;
-			font-size: 25px;
-			padding: 12px;
-			margin: 15px;
-			width: 200px;
-		}
-		button:hover {
-			cursor: pointer;
-		}
+
 		.voteBtn:hover {
 			background: #37EA74;
 		}

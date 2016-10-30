@@ -32,7 +32,7 @@ class Chart extends React.Component {
 						<i className="fa fa-twitter" aria-hidden="true"></i>
 					</a>
 				</h1>
-				<Pie chartData = {data} options = {chartOptions} />
+				<Pie chartData = {data} options = {chartOptions} redraw generateLegend/>
 			</div>
 		);
 	}

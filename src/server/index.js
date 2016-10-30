@@ -29,14 +29,12 @@ if (NODE_ENV === 'development') {
   prodConfig(app);
 }
 
-// test connection to database
-// MongoClient.connect(url, (err, db) => {
-	
-// 	assert.equal(null, err);
-// 	console.log('Connection to MongoDB Established');
-
-// 	db.close();
-// });
+//test connection to Mongo
+MongoClient.connect(url, (err, db) => {
+	assert.equal(null, err);
+	console.log('Connection to MongoDB Established');
+	db.close();
+});
 
 app.use(express.static('dist/client'));
 
