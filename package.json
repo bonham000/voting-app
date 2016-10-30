@@ -2,6 +2,9 @@
   "name": "react-node-light-spa",
   "version": "1.0.1",
   "description": "React, Redux, Express.js",
+  "engines": {
+  	"node": "6.8.1"
+  },
   "main": "dist/server/index.js",
   "scripts": {
     "lint:server": "eslint src/server",
