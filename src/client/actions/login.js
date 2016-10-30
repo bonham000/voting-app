@@ -40,7 +40,7 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return axios.post('http://localhost:3000/sessions/create', creds).then ( (res) => {
+    return axios.post('https://blooming-beach-19422.herokuapp.com/sessions/create', creds).then ( (res) => {
       
       if (res.status === 201) {
 
@@ -90,7 +90,7 @@ export function registerUser(user) {
     dispatch(newSignUp(user))
 
     // Request is made to the server with the registration data
-    return axios.post('http://localhost:3000/register', user).then( (res) => {
+    return axios.post('https://blooming-beach-19422.herokuapp.com/register', user).then( (res) => {
 
       let user = {
         user: res.data.username,
