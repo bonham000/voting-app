@@ -24,7 +24,7 @@ class Chart extends React.Component {
 	    percentageInnerCutout: 50,
 	    tooltipTemplate: "<%= value %>%"
 		}
-		const text = "https://twitter.com/intent/tweet?text=Vote on " + this.props.poll.title + " at http://localhost:3000!"
+		const text = "https://twitter.com/intent/tweet?text=Vote on " + this.props.poll.title + " at https://blooming-beach-19422.herokuapp.com/view-polls"
 		return (
 			<div className = 'chartWrapper'>
 				<h1>Poll Results
