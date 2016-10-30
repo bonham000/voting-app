@@ -25,7 +25,6 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.4.1",
-    "cross-env": "^2.0.1",
     "css-loader": "^0.25.0",
     "eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
@@ -34,7 +33,6 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
     "node-sass": "^3.10.0",
     "nodemon": "^1.10.2",
     "npm-run-all": "^3.1.0",
@@ -42,7 +40,6 @@
     "redux-immutable-state-invariant": "^1.2.3",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.1",
     "webpack-hot-middleware": "^2.12.2"
@@ -65,7 +62,9 @@
     "body-parser": "^1.15.2",
     "chart.js": "^1.1.1",
     "compression": "^1.6.2",
+    "cross-env": "^2.0.1",
     "cors": "^2.8.1",
+    "file-loader": "^0.9.0",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-history-api-fallback": "^2.0.0",
@@ -82,6 +81,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "uuid-v4": "^0.1.0",
+    "url-loader": "^0.5.7",
     "validator": "^6.1.0"
   }
 }
