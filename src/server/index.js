@@ -4,7 +4,7 @@ import path from 'path'
 import fallback from 'express-history-api-fallback'
 import devConfig from './config/setup/dev'
 import prodConfig from './config/setup/prod'
-import { NODE_ENV, PORT } from './config/env'
+import { NODE_ENV } from './config/env'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 
@@ -44,9 +44,9 @@ app.use(pollRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 
-app.listen(PORT, (err) => {
+app.listen(process.env.PORT || 5000, (err) => {
   if (err) throw err;
-  console.log(`The Express Server is Listening at port ${PORT} in ${NODE_ENV} mode`);
+  console.log(`The Express Server is Listening in ${NODE_ENV} mode`);
 });
 
 export default app;
