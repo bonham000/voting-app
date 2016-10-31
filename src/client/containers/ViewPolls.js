@@ -57,7 +57,7 @@ class ViewPolls extends React.Component {
 		const vote = {
 			id: poll._id,
 			selectedOption: selected[poll._id],
-			user: localStorage.getItem('user')
+			user: localStorage.getItem('user') !== '' ? localStorage.getItem('user') : ''
 		}
 		// dispatch vote action here
 		this.props.dispatchVote(vote).then( () => {
