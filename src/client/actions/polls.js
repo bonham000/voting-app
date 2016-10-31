@@ -47,8 +47,7 @@ function voteSubmitted(data) {
 export function submitVote(vote) {
 	return dispatch => {
 		axios.post('https://blooming-beach-19422.herokuapp.com/api/submit-vote', vote).then( (response) => {
-			// need to show view page here
-			return dispatch(retrievePolls(response.data).then( () => {
+			return dispatch(retrievePolls().then( () => {
 				browserHistory.push('/');
 			}));
 		}).catch(error => {
