@@ -112,21 +112,19 @@ class AddPoll extends React.Component {
 
       const token = localStorage.getItem('id_token') ? localStorage.getItem('id_token') : '';
 
-      console.log('token:', token);
-
       this.props.submitNewPoll(pollData, token);
 
-    } else if (title === '' && options.length <= 1) {
+    } else if (title === '' && options.length < 2) {
       this.setState({
         alertTitle: true,
         alertOptions: true
       });
-    } else if (title !== '' && options.length < 1) {
+    } else if (title !== '' && options.length < 2) {
       this.setState({
         alertTitle: false,
         alertOptions: true 
       });
-    } else if (title === '' && options.length > 1) {
+    } else if (title === '' && options.length >= 2) {
       this.setState({
         alertTitle: true,
         alertOptions: false

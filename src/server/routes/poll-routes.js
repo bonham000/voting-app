@@ -85,12 +85,10 @@ app.get('/api/retrieve-polls', (req, res) => {
 // Handle poll votes
 app.post('/api/submit-vote', (req, res) => {
 
-	const { id, selectedOption, user } = req.body;
-	const IP = req.connection.remoteAddress;
+	let { id, selectedOption, user } = req.body;
+	let identity = req.ip;
 
 	// Set identity to username if user is authenticated, otherwise use IP address
-	let identity = IP;
-
 	if (user !== '') { identity = user; }
 
 	MongoClient.connect(url, (err, db) => {
@@ -104,18 +102,21 @@ app.post('/api/submit-vote', (req, res) => {
 
 			let newOptions = data.options;
 			let newRecord = data.votingRecord.slice();
-			
-			// check voting record so users can only vote once
-			let testSubmission = newRecord.filter( (record) => { return record.identity !== ''; });
-			
-			if (testSubmission.length > 0) {
-				console.log('submission rejected');
-				res.status(401).send("You've already voted on this poll!");
-				db.close();
+	
+			function checkRecord() {		
+				// check voting record so users can only vote once
+				for (let i = 0; i < newRecord.length; i++) {
+					if (newRecord[i] === identity) {
+						console.log('submission rejected');
+						res.status(401).send("You've already voted on this poll!");
+						db.close();
+						return true;
+					}
+				}
+				return false;
 			}
-			else {
-				newRecord.push({ [identity]: selectedOption });
-
+			if (!checkRecord()) {
+				newRecord.push(identity);
 				db.collection('polls').update(
 					{ _id: ObjectId(id) },
 					{ $set:
@@ -125,11 +126,8 @@ app.post('/api/submit-vote', (req, res) => {
 						} 
 					}, function(err, doc) {
 					if (err) throw err;
-						db.collection('polls').find().toArray( (err, data) => { 
-							res.send(data);
-							console.log('successfully voted');
-							db.close();
-						});
+						res.send('success');
+						db.close();
 				});
 			}
 		});

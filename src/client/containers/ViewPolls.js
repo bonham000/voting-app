@@ -61,6 +61,7 @@ class ViewPolls extends React.Component {
 		}
 		// dispatch vote action here
 		this.props.dispatchVote(vote);
+		console.log('dispatched')
 		this.setState({
 			results: [],
 			addOptions: [],
@@ -78,7 +79,6 @@ class ViewPolls extends React.Component {
 				return entry !== idx;
 			});
 			this.setState({ addOptions: newAddOptions });
-
 		}
 	}
 	toggleMenu(idx, targetState) {

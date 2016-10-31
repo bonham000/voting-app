@@ -26,8 +26,6 @@ var _mongodb2 = _interopRequireDefault(_mongodb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 _dotenv2.default.config();
@@ -112,11 +110,9 @@ app.post('/api/submit-vote', function (req, res) {
 	    selectedOption = _req$body.selectedOption,
 	    user = _req$body.user;
 
-	var IP = req.connection.remoteAddress;
+	var identity = req.ip;
 
 	// Set identity to username if user is authenticated, otherwise use IP address
-	var identity = IP;
-
 	if (user !== '') {
 		identity = user;
 	}
@@ -133,29 +129,28 @@ app.post('/api/submit-vote', function (req, res) {
 			var newOptions = data.options;
 			var newRecord = data.votingRecord.slice();
 
-			// check voting record so users can only vote once
-			var testSubmission = newRecord.filter(function (record) {
-				return record.identity !== '';
-			});
-
-			if (testSubmission.length > 0) {
-				console.log('submission rejected');
-				res.status(401).send("You've already voted on this poll!");
-				db.close();
-			} else {
-				newRecord.push(_defineProperty({}, identity, selectedOption));
-
+			function checkRecord() {
+				// check voting record so users can only vote once
+				for (var i = 0; i < newRecord.length; i++) {
+					if (newRecord[i] === identity) {
+						console.log('submission rejected');
+						res.status(401).send("You've already voted on this poll!");
+						db.close();
+						return true;
+					}
+				}
+				return false;
+			}
+			if (!checkRecord()) {
+				newRecord.push(identity);
 				db.collection('polls').update({ _id: ObjectId(id) }, { $set: {
 						options: newOptions,
 						votingRecord: newRecord
 					}
 				}, function (err, doc) {
 					if (err) throw err;
-					db.collection('polls').find().toArray(function (err, data) {
-						res.send(data);
-						console.log('successfully voted');
-						db.close();
-					});
+					res.send('success');
+					db.close();
 				});
 			}
 		});

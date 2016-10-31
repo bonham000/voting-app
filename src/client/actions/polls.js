@@ -4,13 +4,14 @@ import { browserHistory } from 'react-router'
 import { invalidRequest } from './auth'
 import { logoutUser } from './logout'
 
+// https://blooming-beach-19422.herokuapp.com/
+
 export function submitNewPoll(poll, token) {
 	return dispatch => {
-		return axios.post('https://blooming-beach-19422.herokuapp.com/api/add-poll', {
+		return axios.post('http://localhost:3000/api/add-poll', {
 			poll,
 			token,
 		}).then( () => {
-			browserHistory.push('/view-polls')
 			return dispatch(retrievePolls());
 		}).catch(err => {
 			dispatch(invalidRequest(err.response.data));
@@ -28,7 +29,7 @@ export function addOption(poll, option, token) {
 		token,
 	}
 	return dispatch => {
-		axios.post('https://blooming-beach-19422.herokuapp.com/api/add-option', data).then( (response) => {
+		axios.post('http://localhost:3000/api/add-option', data).then( (response) => {
 			browserHistory.push('/view-polls')
 			dispatch(retrievePolls());
 		}).catch(err => console.log(err.response.data));
@@ -46,10 +47,8 @@ function voteSubmitted(data) {
 
 export function submitVote(vote) {
 	return dispatch => {
-		axios.post('https://blooming-beach-19422.herokuapp.com/api/submit-vote', vote).then( (response) => {
-			return dispatch(retrievePolls().then( () => {
-				browserHistory.push('/');
-			}));
+		axios.post('http://localhost:3000/api/submit-vote', vote).then( (response) => {
+			return dispatch(retrievePolls())
 		}).catch(error => {
 			alert(error.response.data);
 		});
@@ -67,7 +66,8 @@ function retrievePollData(polls) {
 
 export function retrievePolls() {
 	return dispatch => {
-		axios.get('https://blooming-beach-19422.herokuapp.com/api/retrieve-polls').then( (response) => {
+		axios.get('http://localhost:3000/api/retrieve-polls').then( (response) => {
+			browserHistory.push('/');
 			return dispatch(retrievePollData(response.data));
 		});
 	}
@@ -75,7 +75,7 @@ export function retrievePolls() {
 
 export function deletePoll(data) {
 	return dispatch => {
-		axios.post('https://blooming-beach-19422.herokuapp.com/api/delete-poll', data).then( (response) => {
+		axios.post('http://localhost:3000/api/delete-poll', data).then( (response) => {
 			return dispatch(retrievePolls(response.data));
 		});
 	}
