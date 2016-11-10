@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import { SAVE_POLLS, retrievePollData, retrievePolls } from '../actions/polls'
-//const pollDefault = axios.get('retrieve-polls').then( (response) => { return response.data });
 
 const polls = (state = [], action) => {
   

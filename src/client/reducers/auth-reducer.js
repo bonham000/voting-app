@@ -4,10 +4,6 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, NEW_SIGNUP, REGISTRATION_E
 import { LOGOUT_SUCCESS } from '../actions/logout'
 import { INVALID_REQUEST } from '../actions/auth'
 
-// The auth reducer. The starting state sets authentication
-// based on a token being in local storage. In a real app,
-// we would also want a util to check if the token is expired.
-
 const defaultState = {
   loginError: '',
   registrationError: '',
